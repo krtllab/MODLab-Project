@@ -1,67 +1,140 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
-<html lang="en" x-data="projects()" :class="{'dark':dark}" x-init="init()" class="scroll-smooth">
+<html lang="en" x-data="projectsApp()" :class="{'dark': dark}" class="scroll-smooth">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Projects — MODLab</title>
+  <meta name="description" content="Explore MODLab's portfolio — dark fantasy illustration, UI/UX designs, landing pages, apparel artwork, and web applications.">
+
+  <!-- Scripts & Fonts -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet"/>
-  <script>tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{display:['PT Sans','sans-serif'],body:['DM Sans','sans-serif']},colors:{accent:'#505050','accent-light':'#55555'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+            body: ['DM Sans', 'sans-serif']
+          },
+          colors: {
+            accent: {
+              DEFAULT: '#F97316',
+              light: '#FB923C',
+              dark: '#EA580C'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
-    *,*::before,*::after{box-sizing:border-box;}
-    html{font-family:'DM Sans',sans-serif;}
-    h1,h2,h3,h4,h5,h6{font-family:'PT Sans',sans-serif;}
-    .reveal{opacity:0;transform:translateY(22px);transition:opacity .55s cubic-bezier(.4,0,.2,1),transform .55s cubic-bezier(.4,0,.2,1);}
-    .reveal.visible{opacity:1;transform:translateY(0);}
-    .nav-link{position:relative;}
-    .nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:currentColor;transition:width .25s cubic-bezier(.4,0,.2,1);}
-    .nav-link:hover::after{width:100%;}
-    ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:#505050;border-radius:99px;}
-    body{transition:background-color .3s,color .3s;}
-    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4;}
-    .btn-primary{position:relative;overflow:hidden;}
-    .btn-primary::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:rgba(255,255,255,.18);transform:skewX(-20deg);transition:left .4s cubic-bezier(.4,0,.2,1);}
-    .btn-primary:hover::after{left:160%;}
-    [x-cloak]{display:none!important;}
-    .photo-frame{position:relative;overflow:hidden;background:#e4e4e7;}
-    .photo-frame img{width:100%;height:100%;object-fit:cover;display:block;}
-    .project-card{transition:transform .3s cubic-bezier(.4,0,.2,1),border-color .2s;}
-    .project-card:hover{transform:translateY(-4px);}
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { font-family: 'DM Sans', sans-serif; }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { transition: background-color .3s, color .3s; }
+
+    /* Noise overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: .25;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E");
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #f97316; border-radius: 99px; }
+
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #f97316;
+      border-radius: 2px;
+      transition: width .22s ease;
+    }
+    .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+
+    .btn-primary { position: relative; overflow: hidden; }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: rgba(255,255,255,.2);
+      transform: skewX(-20deg);
+      transition: left .5s ease;
+    }
+    .btn-primary:hover::after { left: 160%; }
+
+    .photo-frame { position: relative; overflow: hidden; background: #e4e4e7; }
+    .photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
+    .photo-frame:hover img { transform: scale(1.05); }
+
+    .project-card { transition: transform .3s cubic-bezier(.4, 0, .2, 1), border-color .2s; }
+    .project-card:hover { transform: translateY(-5px); }
+
+    [x-cloak] { display: none !important; }
   </style>
 </head>
-<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-body antialiased">
+<body class="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-body antialiased selection:bg-orange-500 selection:text-white">
 
+  <!-- NAV -->
   <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-    :class="scrolled?'bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md shadow-sm shadow-black/5':'bg-transparent'">
-    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-      <a href="index.html" class="font-display font-bold text-xl tracking-tight z-10">
-        <span class="text-zinc-900 dark:text-white">MOD</span><span class="text-accent">Lab</span>
+    :class="scrolled ? 'bg-white/85 dark:bg-zinc-950/85 backdrop-blur-md shadow-lg shadow-black/5 border-b border-zinc-200/50 dark:border-zinc-800/50' : 'bg-transparent'">
+    <nav class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="index.html" class="font-display font-extrabold text-2xl tracking-tight z-10 flex items-center gap-2">
+        <span class="w-3 h-3 rounded-full bg-orange-500 shadow-sm shadow-orange-500/50 animate-pulse"></span>
+        <span class="text-zinc-900 dark:text-white">MOD</span><span class="text-orange-500">Lab</span>
       </a>
+
       <ul class="hidden md:flex items-center gap-8 text-sm font-medium">
         <li><a href="index.html#services" class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Services</a></li>
-        <li><a href="projects.html" class="nav-link text-accent font-medium">Work</a></li>
+        <li><a href="projects.html" class="nav-link active text-orange-500 font-semibold">Work</a></li>
         <li><a href="index.html#about" class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">About</a></li>
         <li><a href="blog.html" class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Blog</a></li>
         <li><a href="index.html#contact" class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Contact</a></li>
       </ul>
+
       <div class="flex items-center gap-3">
-        <button @click="dark=!dark;localStorage.setItem('theme',dark?'dark':'light')" class="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors" :aria-label="dark?'Light mode':'Dark mode'">
-          <svg x-show="!dark" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-          <svg x-show="dark" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
+        <button @click="dark=!dark" class="w-10 h-10 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors shadow-sm" :aria-label="dark?'Light mode':'Dark mode'">
+          <svg x-show="!dark" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          <svg x-show="dark"  class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
         </button>
-        <a href="index.html#contact" class="hidden md:inline-flex items-center gap-2 btn-primary bg-accent text-white text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors">Hire me &rarr;</a>
-        <button @click="mobileMenu=!mobileMenu" class="md:hidden w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800" aria-label="Toggle menu">
-          <svg x-show="!mobileMenu" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-          <svg x-show="mobileMenu" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+
+        <a href="index.html#contact" class="hidden md:inline-flex items-center gap-2 btn-primary bg-orange-500 text-white text-sm font-semibold px-5 py-2.5 rounded-full shadow-md shadow-orange-500/25 transition-colors">Hire me →</a>
+
+        <button @click="mobileMenu=!mobileMenu" class="md:hidden w-10 h-10 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900" aria-label="Toggle menu">
+          <svg x-show="!mobileMenu" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg x-show="mobileMenu"  class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
     </nav>
-    <div x-show="mobileMenu" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2" class="md:hidden bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-900">
-      <ul class="flex flex-col px-6 py-4 gap-4 text-sm font-medium">
+
+    <!-- Mobile Menu -->
+    <div x-show="mobileMenu" x-cloak
+      x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+      x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2"
+      class="md:hidden bg-white/95 dark:bg-zinc-950/95 backdrop-blur-lg border-t border-zinc-200 dark:border-zinc-800">
+      <ul class="flex flex-col px-6 py-6 gap-4 text-base font-medium">
         <li><a href="index.html#services" @click="mobileMenu=false" class="block text-zinc-700 dark:text-zinc-300">Services</a></li>
-        <li><a href="projects.html" class="block text-accent font-medium">Work</a></li>
+        <li><a href="projects.html" class="block text-orange-500 font-semibold">Work</a></li>
         <li><a href="index.html#about" @click="mobileMenu=false" class="block text-zinc-700 dark:text-zinc-300">About</a></li>
         <li><a href="blog.html" @click="mobileMenu=false" class="block text-zinc-700 dark:text-zinc-300">Blog</a></li>
         <li><a href="index.html#contact" @click="mobileMenu=false" class="block text-zinc-700 dark:text-zinc-300">Contact</a></li>
@@ -70,380 +143,159 @@
   </header>
 
   <main>
+    <!-- HERO HEADER -->
     <section class="pt-36 pb-12 relative overflow-hidden">
-      <div class="absolute top-0 right-0 w-80 h-80 bg-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute top-10 right-0 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl pointer-events-none"></div>
       <div class="max-w-6xl mx-auto px-6 relative z-10">
-        <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">Explore The Abyss</p>
-        <h1 class="reveal font-display font-bold text-5xl md:text-6xl text-zinc-900 dark:text-white leading-tight mb-4">All Projects</h1>
-        <p class="reveal text-lg text-zinc-500 dark:text-zinc-400 max-w-xl leading-relaxed mb-8">"From the Shadows, We Forge Digital Worlds."</p>
-        <div class="reveal flex flex-wrap gap-2">
-          <template x-for="f in filterOptions" :key="f.value">
-            <button
-              @click="filter = f.value"
-              :class="filter === f.value ? 'bg-accent text-white border-accent' : 'bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-700 hover:border-accent'"
-              class="text-sm px-4 py-1.5 rounded-full border transition-colors"
-              x-text="f.label">
-            </button>
-          </template>
+        <p class="text-xs font-bold text-orange-500 tracking-widest uppercase mb-3">Portfolio Archive</p>
+        <h1 class="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-zinc-900 dark:text-white leading-tight mb-4">Selected Works</h1>
+        <p class="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl leading-relaxed mb-8">"From the shadows, we forge immersive visual worlds &amp; pixel-perfect interfaces."</p>
+
+        <!-- Search & Filter Controls -->
+        <div class="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-between bg-white dark:bg-zinc-900 p-4 rounded-3xl border border-zinc-200/80 dark:border-zinc-800 shadow-sm">
+          <!-- Filter Buttons -->
+          <div class="flex flex-wrap gap-2">
+            <template x-for="f in filterOptions" :key="f.value">
+              <button
+                @click="filter = f.value"
+                :class="filter === f.value ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700'"
+                class="text-xs font-semibold px-4 py-2 rounded-full transition-all flex items-center gap-1.5">
+                <span x-text="f.label"></span>
+                <span class="px-1.5 py-0.5 rounded-full text-[10px]" :class="filter === f.value ? 'bg-white/20 text-white' : 'bg-zinc-200 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-400'" x-text="getCategoryCount(f.value)"></span>
+              </button>
+            </template>
+          </div>
+
+          <!-- Search Input -->
+          <div class="relative min-w-[220px]">
+            <input type="text" x-model="searchQuery" placeholder="Search projects..."
+              class="w-full bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white text-xs rounded-full pl-9 pr-4 py-2 border border-transparent focus:border-orange-500 focus:outline-none transition-colors">
+            <svg class="w-4 h-4 text-zinc-400 absolute left-3 top-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- PROJECTS GRID -->
     <section class="pb-24">
       <div class="max-w-6xl mx-auto px-6">
-        <!--
-          CORRECTIF : on itere sur TOUS les projets, x-show + x-transition gerent
-          la visibilite de chaque carte. L'ancienne version utilisait x-for sur
-          filteredProjects (computed), ce qui forcait un re-render complet du DOM
-          a chaque changement de filtre — detruisant les classes .reveal et cachant
-          tout le contenu.
-        -->
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <template x-for="p in allProjects" :key="p.id">
-            <div
-              x-show="filter === 'all' || p.category === filter"
-              x-transition:enter="transition ease-out duration-300"
-              x-transition:enter-start="opacity-0 scale-95 translate-y-2"
-              x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-              x-transition:leave="transition ease-in duration-200"
-              x-transition:leave-start="opacity-100 scale-100"
-              x-transition:leave-end="opacity-0 scale-95">
-              <article class="project-card group h-full rounded-2xl overflow-hidden bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
-                <a :href="p.url" class="block photo-frame w-full h-52">
+          <template x-for="p in filteredProjects" :key="p.id">
+            <article class="project-card group h-full rounded-3xl overflow-hidden bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 hover:border-orange-500 shadow-sm flex flex-col justify-between">
+              <div>
+                <a :href="p.url" class="block photo-frame w-full h-56">
                   <img :src="p.img" :alt="p.title" loading="lazy"/>
                 </a>
                 <div class="p-6">
                   <div class="flex flex-wrap gap-2 mb-3">
                     <template x-for="tag in p.tags" :key="tag">
-                      <span class="text-xs px-2.5 py-1 rounded-full"
-                        :class="tag === p.categoryLabel ? 'bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'"
+                      <span class="text-xs px-2.5 py-1 rounded-full font-medium"
+                        :class="tag === p.categoryLabel ? 'bg-orange-500/10 text-orange-600 dark:text-orange-400' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'"
                         x-text="tag"></span>
                     </template>
                   </div>
                   <a :href="p.url">
-                    <h3 class="font-display font-bold text-lg text-zinc-900 dark:text-white mb-2 group-hover:text-accent transition-colors" x-text="p.title"></h3>
+                    <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-2 group-hover:text-orange-500 transition-colors" x-text="p.title"></h3>
                   </a>
-                  <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4" x-text="p.desc"></p>
-                  <div class="flex items-center justify-between">
-                    <a :href="p.url" class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white nav-link">View project →</a>
-                    <span class="text-xs text-zinc-400" x-text="p.year"></span>
-                  </div>
+                  <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4" x-text="p.desc"></p>
                 </div>
-              </article>
-            </div>
+              </div>
+              <div class="px-6 pb-6 pt-0 flex items-center justify-between border-t border-zinc-100 dark:border-zinc-800/80 mt-2">
+                <a :href="p.url" class="inline-flex items-center gap-1 text-sm font-bold text-zinc-900 dark:text-white hover:text-orange-500 transition-colors">View Project →</a>
+                <span class="text-xs font-semibold text-zinc-400" x-text="p.year"></span>
+              </div>
+            </article>
           </template>
         </div>
-        <div x-show="visibleCount === 0" x-cloak class="text-center py-20">
-          <p class="text-zinc-400 text-sm">No projects in this category yet.</p>
+
+        <!-- Empty State -->
+        <div x-show="filteredProjects.length === 0" x-cloak class="text-center py-20 bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800">
+          <svg class="w-12 h-12 text-zinc-400 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <p class="text-zinc-600 dark:text-zinc-400 font-medium">No projects match your current filter or search.</p>
+          <button @click="filter='all'; searchQuery=''" class="mt-4 text-xs text-orange-500 font-semibold hover:underline">Reset Filters</button>
         </div>
       </div>
     </section>
 
+    <!-- CTA BANNER -->
     <section class="pb-24">
       <div class="max-w-6xl mx-auto px-6">
-        <div class="bg-zinc-900 dark:bg-zinc-800 rounded-3xl p-10 md:p-14 text-center relative overflow-hidden">
-          <div class="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl pointer-events-none"></div>
-          <div class="absolute bottom-0 left-0 w-40 h-40 bg-accent/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="bg-zinc-900 dark:bg-zinc-900 rounded-3xl p-10 md:p-14 text-center relative overflow-hidden shadow-2xl border border-zinc-800 text-white">
+          <div class="absolute top-0 right-0 w-64 h-64 bg-orange-500/20 rounded-full blur-3xl pointer-events-none"></div>
           <div class="relative z-10">
-            <p class="text-xs font-medium text-accent tracking-widest uppercase mb-4">Ready to start?</p>
-            <h2 class="font-display font-bold text-3xl md:text-4xl text-white mb-4">Want your project here?</h2>
-            <p class="text-zinc-400 max-w-md mx-auto mb-8">I'm available for new projects. Tell me about what you're building and let's see if we're a good fit.</p>
-            <a href="index.html#contact" class="inline-flex items-center gap-2 btn-primary bg-accent text-white font-medium px-8 py-3.5 rounded-full hover:bg-accent-light transition-colors">Start a project &rarr;</a>
+            <p class="text-xs font-bold text-orange-500 tracking-widest uppercase mb-3">Ready to Collaborate?</p>
+            <h2 class="font-display font-extrabold text-3xl md:text-4xl text-white mb-4">Want your project featured here?</h2>
+            <p class="text-zinc-400 max-w-md mx-auto mb-8 text-sm sm:text-base">We are available for new commissions, artwork packages, and web products.</p>
+            <a href="index.html#contact" class="inline-flex items-center gap-2 btn-primary bg-orange-500 text-white font-bold px-8 py-3.5 rounded-full hover:bg-orange-600 transition-all shadow-lg shadow-orange-500/25 text-sm">Start a Project →</a>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="border-t border-zinc-100 dark:border-zinc-900">
+  <footer class="border-t border-zinc-200 dark:border-zinc-800/80 bg-white dark:bg-zinc-950">
     <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p class="text-sm text-zinc-400">&copy; <span id="year"></span> MODLab All rights reserved.</p>
-      <p class="text-xs text-zinc-500">Built with VScode &amp; Alpine.js</p>
+      <p class="text-sm text-zinc-500 dark:text-zinc-400">© <span id="year"></span> MODLab. All rights reserved.</p>
+      <p class="text-xs text-zinc-400 dark:text-zinc-500">Built with <span class="text-orange-500">Tailwind CSS</span> &amp; <span class="text-orange-500">Alpine.js</span></p>
     </div>
   </footer>
 
   <script>
-    function projects() {
+    function projectsApp() {
       return {
         dark: false,
         scrolled: false,
         mobileMenu: false,
         filter: 'all',
+        searchQuery: '',
 
         filterOptions: [
-          { value: 'all',       label: 'All (9)' },
-          { value: 'Apparel',      label: 'Apparel' },
-          { value: 'landing',   label: 'Landing page' },
-          { value: 'Website',    label: 'Website' },
+          { value: 'all', label: 'All' },
+          { value: 'Apparel', label: 'Apparel' },
+          { value: 'landing', label: 'Landing Page' },
+          { value: 'Website', label: 'Website' },
           { value: 'Cover Art', label: 'Cover Art' },
         ],
 
         allProjects: [
-          { id:1, title:'Visceral Roots Archive', category:'Apparel', categoryLabel:'Apparel', tags:['Macabre','Illustration','Intricate'], year:'2025', desc:'Complete redesign of a B2B notification platform. Reduced cognitive load by 40% and improved trial-to-paid conversion.', img:'https://i.ibb.co.com/1G1W1QVR/Matterial-Post2.jpg', url:'https://keratuli.myportfolio.com/the-undead-root' }, 
-          { id:2,  title:'BornDead Apparel',    category:'Apparel',   categoryLabel:'Apparel', tags:['Merch','Apparel','Tshirt'], year:'2025', desc:'Marketing site and onboarding flow for a personal finance app targeting young professionals.',                              img:'https://i.ibb.co.com/VY6XTnkK/asett7.jpg', url:'case-study.html' },
-          { id:3,  title:'RedFang Hiphop Album', category:'Cover',    categoryLabel:'Cover Art',       tags:['Music','CoverArt'],                year:'2024', desc:'Bold editorial site for a Paris-based branding studio. Scroll-driven animations and custom cursor.',                      img:'https://i.ibb.co.com/WvLvHCxh/Vinnyl-Post1.jpg', url:'case-study.html' },
-          { id:4,  title:'RetroGate Hero',    category:'landing',   categoryLabel:'Landing page', tags:['Landing page','GameClub'],         year:'2024', desc:'Conversion-focused landing page for a proptech startup entering the French market.',                                      img:'https://i.ibb.co.com/6RJmRNbQ/art-Post1.jpg',  url:'case-study.html' },
-          { id:5,  title:'MonoDead Label', category:'Apparel',      categoryLabel:'Apparel',         tags:['Drawing','Dashboard','Procreate'],           year:'2024', desc:'Data visualisation dashboard for a B2B analytics platform. Designed for clarity at high data density.',                img:'https://i.ibb.co.com/H019dYq/imagel-Post1.jpg', url:'case-study.html' },
-          { id:6,  title:'Club Game Website',     category:'Website', categoryLabel:'Website',   tags:['Website','Game'],               year:'2023', desc:'Custom Shopify theme for a sustainable cosmetics brand. Mobile-first with high emphasis on product imagery.',           img:'https://i.ibb.co.com/xt9TXdwY/webpost1.jpg',  url:'case-study.html' },
-          { id:7,  title:'Mariana Porto',      category:'Website',   categoryLabel:'Website', tags:['Website','Art','Designs'],   year:'2023', desc:'App landing page for a mental wellness startup. Warm, accessible design with strong social proof.',                    img:'https://i.ibb.co.com/zT0Vj7tc/webpost2.jpg', url:'case-study.html' },
-          { id:8,  title:'Cover EP Music',  category:'Music',    categoryLabel:'Cover Art',       tags:['Music','Album'],                  year:'2023', desc:'Full rebrand and website for a digital communications agency in Lyon.',                                                img:'https://i.ibb.co.com/39ZvD0Y3/Undead-Matterial-Post2.jpg', url:'case-study.html' },
-          { id:9,  title:'MobProbe Apparel',      category:'Apparel', categoryLabel:'Apparel',   tags:['Apparel','Merchandise'],                year:'2023', desc:'Product page redesign and checkout optimisation for a DTC furniture brand. Reduced cart abandonment by 18%.',         img:'https://i.ibb.co.com/TMCm3yq8/Apparelpost1.jpg',  url:'case-study.html' },
+          { id:1, title:'Visceral Roots Archive', category:'Apparel', categoryLabel:'Apparel', tags:['Apparel','Illustration','Macabre'], year:'2025', desc:'Custom dark fantasy illustration and merchandise graphics exploring visceral aesthetics.', img:'https://i.ibb.co.com/1G1W1QVR/Matterial-Post2.jpg', url:'case-study.html' },
+          { id:2, title:'BornDead Apparel', category:'Apparel', categoryLabel:'Apparel', tags:['Apparel','Merch','Streetwear'], year:'2025', desc:'Bold apparel design series crafted for heavy music culture and streetwear brands.', img:'https://i.ibb.co.com/VY6XTnkK/asett7.jpg', url:'case-study.html' },
+          { id:3, title:'RedFang Hiphop Album', category:'Cover Art', categoryLabel:'Cover Art', tags:['Cover Art','Music','Branding'], year:'2024', desc:'Editorial artwork and vinyl cover illustration for a Parisian music label.', img:'https://i.ibb.co.com/WvLvHCxh/Vinnyl-Post1.jpg', url:'case-study.html' },
+          { id:4, title:'RetroGate Hero', category:'landing', categoryLabel:'Landing Page', tags:['Landing Page','Gaming','UI/UX'], year:'2024', desc:'Conversion-focused hero landing page for an online gaming club.', img:'https://i.ibb.co.com/6RJmRNbQ/art-Post1.jpg', url:'case-study.html' },
+          { id:5, title:'MonoDead Label Series', category:'Apparel', categoryLabel:'Apparel', tags:['Apparel','Drawing','Procreate'], year:'2024', desc:'Detailed digital ink illustrations crafted for limited edition t-shirts.', img:'https://i.ibb.co.com/H019dYq/imagel-Post1.jpg', url:'case-study.html' },
+          { id:6, title:'Club Game Website', category:'Website', categoryLabel:'Website', tags:['Website','Gaming','Frontend'], year:'2023', desc:'Dark-mode web application and community hub for competitive gamers.', img:'https://i.ibb.co.com/xt9TXdwY/webpost1.jpg', url:'case-study.html' },
+          { id:7, title:'Mariana Porto Portfolio', category:'Website', categoryLabel:'Website', tags:['Website','Art','Designs'], year:'2023', desc:'Minimalist portfolio platform showcasing modern fine art and sculpture.', img:'https://i.ibb.co.com/zT0Vj7tc/webpost2.jpg', url:'case-study.html' },
+          { id:8, title:'Cover EP Music', category:'Cover Art', categoryLabel:'Cover Art', tags:['Cover Art','Music','Album'], year:'2023', desc:'EP artwork and digital distribution banners for an alternative metal band.', img:'https://i.ibb.co.com/39ZvD0Y3/Undead-Matterial-Post2.jpg', url:'case-study.html' },
+          { id:9, title:'MobProbe Apparel', category:'Apparel', categoryLabel:'Apparel', tags:['Apparel','Merchandise'], year:'2023', desc:'Custom apparel graphics and lookbook presentation for streetwear enthusiasts.', img:'https://i.ibb.co.com/TMCm3yq8/Apparelpost1.jpg', url:'case-study.html' },
         ],
 
-        get visibleCount() {
-          if (this.filter === 'all') return this.allProjects.length;
-          return this.allProjects.filter(p => p.category === this.filter).length;
+        get filteredProjects() {
+          return this.allProjects.filter(p => {
+            const matchesFilter = this.filter === 'all' || p.category === this.filter;
+            const q = this.searchQuery.toLowerCase().trim();
+            const matchesSearch = !q || p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q) || p.tags.some(t => t.toLowerCase().includes(q));
+            return matchesFilter && matchesSearch;
+          });
+        },
+
+        getCategoryCount(cat) {
+          if (cat === 'all') return this.allProjects.length;
+          return this.allProjects.filter(p => p.category === cat).length;
         },
 
         init() {
-          this.dark = localStorage.getItem('theme') === 'dark'
-            || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          this.dark = localStorage.getItem('theme') === 'dark' ||
+            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          this.$watch('dark', v => localStorage.setItem('theme', v ? 'dark' : 'light'));
 
           window.addEventListener('scroll', () => {
             this.scrolled = window.scrollY > 20;
           }, { passive: true });
 
-          this.$nextTick(() => {
-            const obs = new IntersectionObserver(entries => {
-              entries.forEach(e => {
-                if (e.isIntersecting) {
-                  e.target.classList.add('visible');
-                  obs.unobserve(e.target);
-                }
-              });
-            }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
-            document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-          });
+          document.getElementById('year').textContent = new Date().getFullYear();
         }
       }
     }
-
-    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
-=======
-<!DOCTYPE html>
-<html lang="en" x-data="projects()" :class="{'dark':dark}" x-init="init()" class="scroll-smooth">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Projects — MODLab</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet"/>
-  <script>tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{display:['PT Sans','sans-serif'],body:['DM Sans','sans-serif']},colors:{accent:'#505050','accent-light':'#55555'}}}}</script>
-  <style>
-    *,*::before,*::after{box-sizing:border-box;}
-    html{font-family:'DM Sans',sans-serif;}
-    h1,h2,h3,h4,h5,h6{font-family:'PT Sans',sans-serif;}
-    .reveal{opacity:0;transform:translateY(22px);transition:opacity .55s cubic-bezier(.4,0,.2,1),transform .55s cubic-bezier(.4,0,.2,1);}
-    .reveal.visible{opacity:1;transform:translateY(0);}
-    .nav-link{position:relative;}
-    .nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:currentColor;transition:width .25s cubic-bezier(.4,0,.2,1);}
-    .nav-link:hover::after{width:100%;}
-    ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:#505050;border-radius:99px;}
-    body{transition:background-color .3s,color .3s;}
-    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4;}
-    .btn-primary{position:relative;overflow:hidden;}
-    .btn-primary::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:rgba(255,255,255,.18);transform:skewX(-20deg);transition:left .4s cubic-bezier(.4,0,.2,1);}
-    .btn-primary:hover::after{left:160%;}
-    [x-cloak]{display:none!important;}
-    .photo-frame{position:relative;overflow:hidden;background:#e4e4e7;}
-    .photo-frame img{width:100%;height:100%;object-fit:cover;display:block;}
-    .project-card{transition:transform .3s cubic-bezier(.4,0,.2,1),border-color .2s;}
-    .project-card:hover{transform:translateY(-4px);}
-  </style>
-</head>
-<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-body antialiased">
-
-  <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-    :class="scrolled?'bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md shadow-sm shadow-black/5':'bg-transparent'">
-    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-      <a href="index.html" class="font-display font-bold text-xl tracking-tight z-10">
-        <span class="text-zinc-900 dark:text-white">MOD</span><span class="text-accent">Lab</span>
-      </a>
-      <ul class="hidden md:flex items-center gap-8 text-sm font-medium">
-        <li><a href="index.html#services" class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Services</a></li>
-        <li><a href="projects.html" class="nav-link text-accent font-medium">Work</a></li>
-        <li><a href="index.html#about" class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">About</a></li>
-        <li><a href="blog.html" class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Blog</a></li>
-        <li><a href="index.html#contact" class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Contact</a></li>
-      </ul>
-      <div class="flex items-center gap-3">
-        <button @click="dark=!dark;localStorage.setItem('theme',dark?'dark':'light')" class="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors" :aria-label="dark?'Light mode':'Dark mode'">
-          <svg x-show="!dark" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-          <svg x-show="dark" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
-        </button>
-        <a href="index.html#contact" class="hidden md:inline-flex items-center gap-2 btn-primary bg-accent text-white text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors">Hire me &rarr;</a>
-        <button @click="mobileMenu=!mobileMenu" class="md:hidden w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800" aria-label="Toggle menu">
-          <svg x-show="!mobileMenu" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-          <svg x-show="mobileMenu" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-      </div>
-    </nav>
-    <div x-show="mobileMenu" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2" class="md:hidden bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-900">
-      <ul class="flex flex-col px-6 py-4 gap-4 text-sm font-medium">
-        <li><a href="index.html#services" @click="mobileMenu=false" class="block text-zinc-700 dark:text-zinc-300">Services</a></li>
-        <li><a href="projects.html" class="block text-accent font-medium">Work</a></li>
-        <li><a href="index.html#about" @click="mobileMenu=false" class="block text-zinc-700 dark:text-zinc-300">About</a></li>
-        <li><a href="blog.html" @click="mobileMenu=false" class="block text-zinc-700 dark:text-zinc-300">Blog</a></li>
-        <li><a href="index.html#contact" @click="mobileMenu=false" class="block text-zinc-700 dark:text-zinc-300">Contact</a></li>
-      </ul>
-    </div>
-  </header>
-
-  <main>
-    <section class="pt-36 pb-12 relative overflow-hidden">
-      <div class="absolute top-0 right-0 w-80 h-80 bg-accent/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="max-w-6xl mx-auto px-6 relative z-10">
-        <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">Explore The Abyss</p>
-        <h1 class="reveal font-display font-bold text-5xl md:text-6xl text-zinc-900 dark:text-white leading-tight mb-4">All Projects</h1>
-        <p class="reveal text-lg text-zinc-500 dark:text-zinc-400 max-w-xl leading-relaxed mb-8">"From the Shadows, We Forge Digital Worlds."</p>
-        <div class="reveal flex flex-wrap gap-2">
-          <template x-for="f in filterOptions" :key="f.value">
-            <button
-              @click="filter = f.value"
-              :class="filter === f.value ? 'bg-accent text-white border-accent' : 'bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-700 hover:border-accent'"
-              class="text-sm px-4 py-1.5 rounded-full border transition-colors"
-              x-text="f.label">
-            </button>
-          </template>
-        </div>
-      </div>
-    </section>
-
-    <section class="pb-24">
-      <div class="max-w-6xl mx-auto px-6">
-        <!--
-          CORRECTIF : on itere sur TOUS les projets, x-show + x-transition gerent
-          la visibilite de chaque carte. L'ancienne version utilisait x-for sur
-          filteredProjects (computed), ce qui forcait un re-render complet du DOM
-          a chaque changement de filtre — detruisant les classes .reveal et cachant
-          tout le contenu.
-        -->
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <template x-for="p in allProjects" :key="p.id">
-            <div
-              x-show="filter === 'all' || p.category === filter"
-              x-transition:enter="transition ease-out duration-300"
-              x-transition:enter-start="opacity-0 scale-95 translate-y-2"
-              x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-              x-transition:leave="transition ease-in duration-200"
-              x-transition:leave-start="opacity-100 scale-100"
-              x-transition:leave-end="opacity-0 scale-95">
-              <article class="project-card group h-full rounded-2xl overflow-hidden bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
-                <a :href="p.url" class="block photo-frame w-full h-52">
-                  <img :src="p.img" :alt="p.title" loading="lazy"/>
-                </a>
-                <div class="p-6">
-                  <div class="flex flex-wrap gap-2 mb-3">
-                    <template x-for="tag in p.tags" :key="tag">
-                      <span class="text-xs px-2.5 py-1 rounded-full"
-                        :class="tag === p.categoryLabel ? 'bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'"
-                        x-text="tag"></span>
-                    </template>
-                  </div>
-                  <a :href="p.url">
-                    <h3 class="font-display font-bold text-lg text-zinc-900 dark:text-white mb-2 group-hover:text-accent transition-colors" x-text="p.title"></h3>
-                  </a>
-                  <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4" x-text="p.desc"></p>
-                  <div class="flex items-center justify-between">
-                    <a :href="p.url" class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white nav-link">View project →</a>
-                    <span class="text-xs text-zinc-400" x-text="p.year"></span>
-                  </div>
-                </div>
-              </article>
-            </div>
-          </template>
-        </div>
-        <div x-show="visibleCount === 0" x-cloak class="text-center py-20">
-          <p class="text-zinc-400 text-sm">No projects in this category yet.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="pb-24">
-      <div class="max-w-6xl mx-auto px-6">
-        <div class="bg-zinc-900 dark:bg-zinc-800 rounded-3xl p-10 md:p-14 text-center relative overflow-hidden">
-          <div class="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl pointer-events-none"></div>
-          <div class="absolute bottom-0 left-0 w-40 h-40 bg-accent/10 rounded-full blur-2xl pointer-events-none"></div>
-          <div class="relative z-10">
-            <p class="text-xs font-medium text-accent tracking-widest uppercase mb-4">Ready to start?</p>
-            <h2 class="font-display font-bold text-3xl md:text-4xl text-white mb-4">Want your project here?</h2>
-            <p class="text-zinc-400 max-w-md mx-auto mb-8">I'm available for new projects. Tell me about what you're building and let's see if we're a good fit.</p>
-            <a href="index.html#contact" class="inline-flex items-center gap-2 btn-primary bg-accent text-white font-medium px-8 py-3.5 rounded-full hover:bg-accent-light transition-colors">Start a project &rarr;</a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="border-t border-zinc-100 dark:border-zinc-900">
-    <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p class="text-sm text-zinc-400">&copy; <span id="year"></span> MODLab All rights reserved.</p>
-      <p class="text-xs text-zinc-500">Built with VScode &amp; Alpine.js</p>
-    </div>
-  </footer>
-
-  <script>
-    function projects() {
-      return {
-        dark: false,
-        scrolled: false,
-        mobileMenu: false,
-        filter: 'all',
-
-        filterOptions: [
-          { value: 'all',       label: 'All (9)' },
-          { value: 'Apparel',      label: 'Apparel' },
-          { value: 'landing',   label: 'Landing page' },
-          { value: 'Website',    label: 'Website' },
-          { value: 'Cover Art', label: 'Cover Art' },
-        ],
-
-        allProjects: [
-          { id:1, title:'Visceral Roots Archive', category:'Apparel', categoryLabel:'Apparel', tags:['Macabre','Illustration','Intricate'], year:'2025', desc:'Complete redesign of a B2B notification platform. Reduced cognitive load by 40% and improved trial-to-paid conversion.', img:'https://i.ibb.co.com/1G1W1QVR/Matterial-Post2.jpg', url:'https://keratuli.myportfolio.com/the-undead-root' }, 
-          { id:2,  title:'BornDead Apparel',    category:'Apparel',   categoryLabel:'Apparel', tags:['Merch','Apparel','Tshirt'], year:'2025', desc:'Marketing site and onboarding flow for a personal finance app targeting young professionals.',                              img:'https://i.ibb.co.com/VY6XTnkK/asett7.jpg', url:'case-study.html' },
-          { id:3,  title:'RedFang Hiphop Album', category:'Cover',    categoryLabel:'Cover Art',       tags:['Music','CoverArt'],                year:'2024', desc:'Bold editorial site for a Paris-based branding studio. Scroll-driven animations and custom cursor.',                      img:'https://i.ibb.co.com/WvLvHCxh/Vinnyl-Post1.jpg', url:'case-study.html' },
-          { id:4,  title:'RetroGate Hero',    category:'landing',   categoryLabel:'Landing page', tags:['Landing page','GameClub'],         year:'2024', desc:'Conversion-focused landing page for a proptech startup entering the French market.',                                      img:'https://i.ibb.co.com/6RJmRNbQ/art-Post1.jpg',  url:'case-study.html' },
-          { id:5,  title:'MonoDead Label', category:'Apparel',      categoryLabel:'Apparel',         tags:['Drawing','Dashboard','Procreate'],           year:'2024', desc:'Data visualisation dashboard for a B2B analytics platform. Designed for clarity at high data density.',                img:'https://i.ibb.co.com/H019dYq/imagel-Post1.jpg', url:'case-study.html' },
-          { id:6,  title:'Club Game Website',     category:'Website', categoryLabel:'Website',   tags:['Website','Game'],               year:'2023', desc:'Custom Shopify theme for a sustainable cosmetics brand. Mobile-first with high emphasis on product imagery.',           img:'https://i.ibb.co.com/xt9TXdwY/webpost1.jpg',  url:'case-study.html' },
-          { id:7,  title:'Mariana Porto',      category:'Website',   categoryLabel:'Website', tags:['Website','Art','Designs'],   year:'2023', desc:'App landing page for a mental wellness startup. Warm, accessible design with strong social proof.',                    img:'https://i.ibb.co.com/zT0Vj7tc/webpost2.jpg', url:'case-study.html' },
-          { id:8,  title:'Cover EP Music',  category:'Music',    categoryLabel:'Cover Art',       tags:['Music','Album'],                  year:'2023', desc:'Full rebrand and website for a digital communications agency in Lyon.',                                                img:'https://i.ibb.co.com/39ZvD0Y3/Undead-Matterial-Post2.jpg', url:'case-study.html' },
-          { id:9,  title:'MobProbe Apparel',      category:'Apparel', categoryLabel:'Apparel',   tags:['Apparel','Merchandise'],                year:'2023', desc:'Product page redesign and checkout optimisation for a DTC furniture brand. Reduced cart abandonment by 18%.',         img:'https://i.ibb.co.com/TMCm3yq8/Apparelpost1.jpg',  url:'case-study.html' },
-        ],
-
-        get visibleCount() {
-          if (this.filter === 'all') return this.allProjects.length;
-          return this.allProjects.filter(p => p.category === this.filter).length;
-        },
-
-        init() {
-          this.dark = localStorage.getItem('theme') === 'dark'
-            || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
-
-          window.addEventListener('scroll', () => {
-            this.scrolled = window.scrollY > 20;
-          }, { passive: true });
-
-          this.$nextTick(() => {
-            const obs = new IntersectionObserver(entries => {
-              entries.forEach(e => {
-                if (e.isIntersecting) {
-                  e.target.classList.add('visible');
-                  obs.unobserve(e.target);
-                }
-              });
-            }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
-            document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-          });
-        }
-      }
-    }
-
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
-</body>
-</html>
->>>>>>> f13c37f8a7d21ec5fdcd9dea5b85b1437c2349f1
