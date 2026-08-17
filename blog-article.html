@@ -14,13 +14,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet"/>
   <script>
-    tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{display:['PT Sans','sans-serif'],body:['DM Sans','sans-serif']},colors:{accent:'#FF6B2B','accent-light':'#FF8F5C'}}}}
+    tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{display:['PT Sans','sans-serif'],body:['DM Sans','sans-serif']},colors:{accent:'#535353','accent-light':'#535353'}}}}
   </script>
   <style>
     *,*::before,*::after{box-sizing:border-box;}
     html{font-family:'DM Sans',sans-serif;}
     h1,h2,h3,h4,h5,h6{font-family:'PT Sans',sans-serif;}
-    ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:#FF6B2B;border-radius:99px;}
+    ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:#525252;border-radius:99px;}
     body{transition:background-color .3s,color .3s;}
     body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4;}
     .nav-link{position:relative;}
@@ -42,18 +42,18 @@
     .prose-article li{margin-bottom:.4rem;line-height:1.7;color:#52525b;}
     .dark .prose-article li{color:#a1a1aa;}
     .prose-article pre{background:#18181b;color:#e4e4e7;border-radius:12px;padding:1.25rem 1.5rem;overflow-x:auto;font-size:.85rem;line-height:1.7;margin:0 0 1.6rem;}
-    .prose-article code:not(pre code){background:#f4f4f5;color:#FF6B2B;padding:.15em .4em;border-radius:4px;font-size:.875em;}
+    .prose-article code:not(pre code){background:#f4f4f5;color:#525252;padding:.15em .4em;border-radius:4px;font-size:.875em;}
     .dark .prose-article code:not(pre code){background:#27272a;}
-    .prose-article blockquote{border-left:3px solid #FF6B2B;padding:.75rem 1.25rem;margin:0 0 1.6rem;background:#fff7f4;border-radius:0 8px 8px 0;}
+    .prose-article blockquote{border-left:3px solid #525252;padding:.75rem 1.25rem;margin:0 0 1.6rem;background:#fff7f4;border-radius:0 8px 8px 0;}
     .dark .prose-article blockquote{background:#27272a;}
     .prose-article blockquote p{color:#52525b;font-style:italic;margin:0;}
     .dark .prose-article blockquote p{color:#a1a1aa;}
-    .prose-article a{color:#FF6B2B;text-decoration:underline;text-underline-offset:3px;}
+    .prose-article a{color:#525252;text-decoration:underline;text-underline-offset:3px;}
     .prose-article hr{border:none;border-top:1px solid #e4e4e7;margin:2.5rem 0;}
     .dark .prose-article hr{border-top-color:#27272a;}
 
     /* Reading progress bar */
-    .progress-bar{position:fixed;top:0;left:0;height:3px;background:#FF6B2B;z-index:100;transition:width .1s;}
+    .progress-bar{position:fixed;top:0;left:0;height:3px;background:#525252;z-index:100;transition:width .1s;}
 
     .reveal{opacity:0;transform:translateY(20px);transition:opacity .5s cubic-bezier(.4,0,.2,1),transform .5s cubic-bezier(.4,0,.2,1);}
     .reveal.visible{opacity:1;transform:translateY(0);}
@@ -71,7 +71,7 @@
     :class="scrolled?'bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md shadow-sm shadow-black/5':'bg-transparent'">
     <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Main navigation">
       <a href="index.html" class="font-display font-bold text-xl tracking-tight z-10">
-        <span class="text-zinc-900 dark:text-white">eli</span><span class="text-accent">ott</span>
+        <span class="text-zinc-900 dark:text-white">MOD</span><span class="text-accent">Lab</span>
       </a>
       <ul class="hidden md:flex items-center gap-8 text-sm font-medium" role="list">
         <li><a href="index.html#services" class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Services</a></li>
@@ -125,11 +125,11 @@
         <!-- Author -->
         <div class="flex items-center gap-4 py-6 border-t border-b border-zinc-100 dark:border-zinc-900">
           <div class="photo-frame w-12 h-12 rounded-full shrink-0">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="Eliott" loading="lazy"/>
+            <img src="https://ibb.co.com/XfgdWJsG" alt="MODLab" loading="lazy"/>
           </div>
           <div>
-            <p class="font-medium text-zinc-900 dark:text-white text-sm">Eliott</p>
-            <p class="text-xs text-zinc-500">UI/UX Designer &amp; Frontend Developer</p>
+            <p class="font-medium text-zinc-900 dark:text-white text-sm">MODLab</p>
+            <p class="text-xs text-zinc-500">Visual Identity &amp; Intricate Projects</p>
           </div>
           <div class="ml-auto flex gap-3">
             <a href="#" class="w-8 h-8 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:text-accent hover:border-accent transition-colors" aria-label="Share on Twitter">
@@ -145,7 +145,7 @@
       <!-- Hero image -->
       <div class="max-w-4xl mx-auto px-6 mb-12">
         <div class="photo-frame w-full h-72 md:h-96 rounded-2xl">
-          <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80" alt="Code editor with CSS" loading="lazy"/>
+          <img src="https://i.ibb.co.com/6RJmRNbQ/art-Post1.jpg" alt="Code editor with CSS" loading="lazy"/>
         </div>
       </div>
 
@@ -206,7 +206,7 @@
 
           <article class="reveal card group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
             <div class="photo-frame w-full h-40">
-              <img src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=700&q=80" alt="Alpine.js" loading="lazy"/>
+              <img src="https://ibb.co.com/QF9FF6bC" alt="Alpine.js" loading="lazy"/>
             </div>
             <div class="p-5">
               <span class="text-xs text-zinc-400 mb-2 block">Dec 3, 2024 · Dev</span>
@@ -232,7 +232,7 @@
 
           <article class="reveal card group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
             <div class="photo-frame w-full h-40">
-              <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=700&q=80" alt="UX laws" loading="lazy"/>
+              <img src="https://ibb.co.com/ZpWZkJqw" alt="UX laws" loading="lazy"/>
             </div>
             <div class="p-5">
               <span class="text-xs text-zinc-400 mb-2 block">Nov 18, 2024 · Design</span>
@@ -251,8 +251,8 @@
 
   <footer class="border-t border-zinc-100 dark:border-zinc-900">
     <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p class="text-sm text-zinc-400">© <span id="yr"></span> Eliott. All rights reserved. <br> Developed by <a href="https://lbegey78.gumroad.com/" target="_blank" class="font-bold">Laurent Begey</a> • Distributed by <a href="https://themewagon.com/" target="_blank" class="font-bold">ThemeWagon</a></p>
-      <p class="text-xs text-zinc-500">Built with <a href="https://tailwindcss.com" class="hover:text-zinc-900 dark:hover:text-white transition-colors" rel="noopener noreferrer" target="_blank">Tailwind CSS</a> &amp; <a href="https://alpinejs.dev" class="hover:text-zinc-900 dark:hover:text-white transition-colors" rel="noopener noreferrer" target="_blank">Alpine.js</a></p>
+      <p class="text-sm text-zinc-400">© <span id="yr"></span> MODLab. All rights reserved. <br> Developed by <a href="https://lbegey78.gumroad.com/" target="_blank" class="font-bold">Galih Addi</a> • Distributed by <a href="https://themewagon.com/" target="_blank" class="font-bold">MODLab</a></p>
+      <p class="text-xs text-zinc-500">Built with <a href="https://tailwindcss.com" class="hover:text-zinc-900 dark:hover:text-white transition-colors" rel="noopener noreferrer" target="_blank">MODLab CSS</a> &amp; <a href="https://alpinejs.dev" class="hover:text-zinc-900 dark:hover:text-white transition-colors" rel="noopener noreferrer" target="_blank">Alpine.js</a></p>
     </div>
   </footer>
 
